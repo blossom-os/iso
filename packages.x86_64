@@ -1,0 +1,63 @@
+# Additional packages to include in the ISO
+# Add one package per line
+
+# Base Arch packages
+base
+base-devel
+linux
+linux-firmware
+
+# Sway desktop environment
+sway
+swaylock
+swayidle
+swaybar
+wl-clipboard
+xorg-xwayland
+mesa
+vulkan-radeon
+vulkan-intel
+pipewire
+pipewire-pulse
+pipewire-alsa
+wireplumber
+brightnessctl
+grim
+slurp
+yay
+
+# Text editors
+vim
+nano
+
+# System utilities
+htop
+tree
+neofetch
+
+# Development tools
+git
+base-devel
+
+# Network tools
+wget
+curl
+networkmanager
+network-manager-applet
+
+# Web browser
+firefox
+
+# Extra fonts
+noto-fonts-emoji
+noto-fonts-cjk
+noto-fonts-extra
+noto-fonts
+ttf-dejavu
+
+# Terminal
+kitty
+
+# GUI utilities
+zenity
+timeshift

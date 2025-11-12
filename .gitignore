@@ -1,0 +1,34 @@
+# Build artifacts
+*.iso
+*.log
+
+# archiso working directories
+archiso-config/work/
+archiso-config/out/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Docker volumes
+.docker/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Backup files
+*.bak
+*.backup

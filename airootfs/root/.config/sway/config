@@ -1,0 +1,29 @@
+# homeOS Sway (Install environment) Configuration
+
+# Input configuration
+input type:touchpad {
+    tap enabled
+    natural_scroll enabled
+}
+
+for_window [title="."] floating enable
+
+bar {
+    position top
+    # Keep in mind that the current directory of this config file is $HOME
+    status_command while ~/.config/sway/status.sh; do sleep 0.1; done
+
+    colors {
+        statusline #000000
+        background #808080
+        inactive_workspace #808080 #808080 #5c5c5c
+        focused_workspace #000000 #000000 #ffffff
+    }
+
+    font pango:DejaVu Sans Mono 10
+}
+
+exec network-manager-applet
+
+# Auto-launch homeOS launcher on startup
+exec ~/.config/sway/autorun.sh

@@ -1,0 +1,204 @@
+name: Build Arch Linux ISO
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      iso_name:
+        description: 'Custom ISO name'
+        required: false
+        default: 'homeOS'
+        type: string
+      include_aur:
+        description: 'Include AUR packages'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  ISO_NAME: ${{ inputs.iso_name || 'homeOS' }}
+
+jobs:
+  build-iso:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Free up disk space
+      run: |
+        sudo rm -rf /usr/share/dotnet
+        sudo rm -rf /usr/local/lib/android
+        sudo rm -rf /opt/ghc
+        sudo rm -rf /opt/hostedtoolcache/CodeQL
+        sudo docker image prune --all --force
+        df -h
+
+    - name: Set up Arch Linux environment
+      run: |
+        # Create a container with Arch Linux
+        docker run --privileged -d \
+          --name archlinux-builder \
+          --volume ${{ github.workspace }}:/workspace \
+          --volume /tmp:/tmp \
+          archlinux:latest tail -f /dev/null
+        
+        # Update system and install required packages
+        docker exec archlinux-builder pacman -Syu --noconfirm
+        docker exec archlinux-builder pacman -S --noconfirm \
+          archiso \
+          git \
+          base-devel \
+          wget \
+          curl
+
+    - name: Prepare archiso profile
+      run: |
+        docker exec archlinux-builder bash -c "
+          cd /workspace
+          
+          # Copy the releng profile as a base
+          cp -r /usr/share/archiso/configs/releng ./archiso-config
+          
+          # Customize the profile
+          cd archiso-config
+          
+          # Update profile name
+          sed -i 's/iso_name=\"archlinux\"/iso_name=\"${{ env.ISO_NAME }}\"/' profiledef.sh
+          sed -i 's/iso_label=\"ARCH_\$(date +%Y%m)\"/iso_label=\"$(echo ${{ env.ISO_NAME }} | tr '[:lower:]' '[:upper:]')_\$(date +%Y%m)\"/' profiledef.sh
+          
+          # Add custom packages if packages.x86_64 exists in workspace
+          if [ -f /workspace/packages.x86_64 ]; then
+            cat /workspace/packages.x86_64 >> packages.x86_64
+          fi
+          
+          # Copy custom files if they exist
+          if [ -d /workspace/airootfs ]; then
+            cp -r /workspace/airootfs/* airootfs/ 2>/dev/null || true
+          fi
+          
+          # Set executable permissions
+          find airootfs -type f -name '*.sh' -exec chmod +x {} \\;
+        "
+
+    - name: Preinstall Chaotic keyring, mirrorlist and yay into airootfs
+      run: |
+        docker exec --privileged archlinux-builder bash -c "
+          set -e
+          cd /workspace/archiso-config
+
+          # Ensure pacman.conf was written into the airootfs
+          if [ ! -f airootfs/etc/pacman.conf ]; then
+            echo 'Missing airootfs/etc/pacman.conf' >&2
+            exit 1
+          fi
+
+          # Initialize keyring inside the chroot
+          arch-chroot airootfs pacman-key --init || true
+          arch-chroot airootfs pacman-key --populate archlinux || true
+
+          # Try to fetch and locally install chaotic keyring/mirrorlist so the repo exists in the image
+          arch-chroot airootfs pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' || true
+
+          # Import and locally sign chaotic key (best-effort)
+          arch-chroot airootfs pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com || true
+          arch-chroot airootfs pacman-key --lsign-key 3056513887B78AEB || true
+
+          # Update package databases inside the chroot and install yay from chaotic
+          arch-chroot airootfs pacman -Sy --noconfirm || true
+          arch-chroot airootfs pacman -S --noconfirm yay || true
+        "
+
+    - name: Build ISO
+      run: |
+        docker exec archlinux-builder bash -c "
+          cd /workspace/archiso-config
+          
+          # Build the ISO
+          mkarchiso -v -w work -o out .
+          
+          # Move ISO to workspace root for artifact upload
+          mv out/*.iso /workspace/
+        "
+
+    - name: Get ISO info
+      id: iso_info
+      run: |
+        ISO_FILE=$(ls *.iso | head -n 1)
+        ISO_SIZE=$(du -h "$ISO_FILE" | cut -f1)
+        echo "iso_file=$ISO_FILE" >> $GITHUB_OUTPUT
+        echo "iso_size=$ISO_SIZE" >> $GITHUB_OUTPUT
+        echo "ISO built: $ISO_FILE ($ISO_SIZE)"
+
+    - name: Upload ISO artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ env.ISO_NAME }}-iso
+        path: "*.iso"
+        retention-days: 30
+
+    - name: Upload build logs
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-logs
+        path: |
+          archiso-config/work/build.log
+          archiso-config/work/*/build.log
+        retention-days: 7
+        if-no-files-found: ignore
+
+    - name: Create release (on tag)
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: "*.iso"
+        body: |
+          ## ${{ env.ISO_NAME }} Arch Linux ISO
+          
+          **File:** ${{ steps.iso_info.outputs.iso_file }}
+          **Size:** ${{ steps.iso_info.outputs.iso_size }}
+          **Built from:** ${{ github.sha }}
+          
+          This ISO was automatically built using GitHub Actions.
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  cleanup:
+    runs-on: ubuntu-latest
+    needs: build-iso
+    if: always()
+    
+    steps:
+    - name: Clean up old artifacts
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            run_id: context.runId,
+          });
+          
+          // Keep only the 10 most recent ISO artifacts
+          const isoArtifacts = artifacts.data.artifacts
+            .filter(artifact => artifact.name.includes('-iso'))
+            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+            .slice(10);
+          
+          for (const artifact of isoArtifacts) {
+            try {
+              await github.rest.actions.deleteArtifact({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                artifact_id: artifact.id,
+              });
+              console.log(`Deleted old artifact: ${artifact.name}`);
+            } catch (error) {
+              console.log(`Failed to delete artifact ${artifact.name}: ${error.message}`);
+            }
+          }
