@@ -97,4 +97,4 @@ fi
 
 # Emojis and characters for the status bar
 # 💎 💻 💡 🔌 ⚡ 📁 \|
-echo "$volumee $volume% | $battery $battery_status | $date_formatted | "
+echo "$date_formatted | "

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Clear console on login
+clear
+
 # Auto-start Sway on TTY1
 if [ -z "$WAYLAND_DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
     # Ensure a runtime dir exists for the root session
