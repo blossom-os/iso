@@ -11,7 +11,6 @@ linux-firmware
 sway
 swaylock
 swayidle
-swaybar
 wl-clipboard
 xorg-xwayland
 mesa
@@ -24,7 +23,6 @@ wireplumber
 brightnessctl
 grim
 slurp
-yay
 
 # Text editors
 vim
@@ -33,7 +31,7 @@ nano
 # System utilities
 htop
 tree
-neofetch
+fastfetch
 
 # Development tools
 git
