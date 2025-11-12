@@ -11,7 +11,7 @@ ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 systemctl enable NetworkManager
 
 # Set hostname
-echo "homeOS-live" > /etc/hostname
+echo "homeos" > /etc/hostname
 
 # Configure sudoers for wheel group
 echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
@@ -31,6 +31,11 @@ if [ -z "$WAYLAND_DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
     exec dbus-run-session -- /usr/bin/sway
 fi
 EOF
+
+# Cleanup root fs
+pacman -Rns --noconfirm $(pacman -Qdtq) || true
+pacman -Scc --noconfirm
+rm -rf /tmp/* /var/tmp/* /var/cache/*
 
 # Set up Sway configuration directory
 mkdir -p /root/.config/sway
