@@ -21,6 +21,10 @@ on:
 env:
   ISO_NAME: ${{ inputs.iso_name || 'homeOS' }}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-iso:
     runs-on: ubuntu-latest
