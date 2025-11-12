@@ -42,8 +42,6 @@ wget
 curl
 networkmanager
 network-manager-applet
-
-# Web browser
 firefox
 
 # Extra fonts
@@ -59,3 +57,4 @@ kitty
 # GUI utilities
 zenity
 timeshift
+gparted

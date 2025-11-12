@@ -8,7 +8,7 @@ echo "Setting up homeOS..."
 ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 
 # Enable some useful services
-systemctl enable --now NetworkManager
+systemctl enable NetworkManager
 
 # Set hostname
 echo "homeOS-live" > /etc/hostname

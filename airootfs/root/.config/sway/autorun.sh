@@ -10,10 +10,11 @@ while true; do
         --column="Description" \
         --width=400 \
         --height=300 \
-        "Installer" "Install homeOS to disk" \
-        "Timeshift" "System backup and restore" \
+        "Timeshift" "Restore from backup" \
+        "Installer" "(Re)install homeOS to disk" \
         "Terminal" "Open terminal" \
         "Browser" "Open web browser" \
+        "Disk Utility" "Repair or erase a disk using GParted" \
         "Shutdown" "Power off system" \
         2>/dev/null)
 
@@ -44,6 +45,13 @@ while true; do
                 /usr/bin/firefox &
             else
                 zenity --error --text="Firefox not found" 2>/dev/null
+            fi
+            ;;
+        "Disk Utility")
+            if [ -x "/usr/bin/gparted" ]; then
+                /usr/bin/gparted &
+            else
+                zenity --error --text="GParted not found" 2>/dev/null
             fi
             ;;
         "Shutdown")
