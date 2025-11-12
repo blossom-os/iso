@@ -85,34 +85,6 @@ jobs:
           find airootfs -type f -name '*.sh' -exec chmod +x {} \\;
         "
 
-    - name: Preinstall Chaotic keyring, mirrorlist and yay into airootfs
-      run: |
-        docker exec --privileged archlinux-builder bash -c "
-          set -e
-          cd /workspace/archiso-config
-
-          # Ensure pacman.conf was written into the airootfs
-          if [ ! -f airootfs/etc/pacman.conf ]; then
-            echo 'Missing airootfs/etc/pacman.conf' >&2
-            exit 1
-          fi
-
-          # Initialize keyring inside the chroot
-          arch-chroot airootfs pacman-key --init || true
-          arch-chroot airootfs pacman-key --populate archlinux || true
-
-          # Try to fetch and locally install chaotic keyring/mirrorlist so the repo exists in the image
-          arch-chroot airootfs pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' || true
-
-          # Import and locally sign chaotic key (best-effort)
-          arch-chroot airootfs pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com || true
-          arch-chroot airootfs pacman-key --lsign-key 3056513887B78AEB || true
-
-          # Update package databases inside the chroot and install yay from chaotic
-          arch-chroot airootfs pacman -Sy --noconfirm || true
-          arch-chroot airootfs pacman -S --noconfirm yay || true
-        "
-
     - name: Build ISO
       run: |
         docker exec archlinux-builder bash -c "
