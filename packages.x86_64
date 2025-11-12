@@ -6,6 +6,7 @@ base
 base-devel
 linux
 linux-firmware
+bash
 
 # Sway desktop environment
 sway
