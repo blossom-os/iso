@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# homeOS Launcher - Zenity menu for common tasks
+# homeOS Recovery - Zenity menu for common tasks
 
 while true; do
     choice=$(zenity --list \
-        --title="homeOS Launcher" \
+        --title="homeOS Recovery" \
         --text="Select an action:" \
         --column="Action" \
         --column="Description" \
