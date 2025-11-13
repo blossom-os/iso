@@ -17,7 +17,9 @@ cp -ra /etc/skel/. /home/liveuser/
 chown -R liveuser:liveuser /home/liveuser/
 
 # Install additional packages
-pacman -U https://cdn.blossom-os.com/blossomos-installer-0.0.1.pacman
+wget -O /tmp/blossomos-installer-0.0.1.pacman https://cdn.blossom-os.com/blossomos-installer-0.0.1.pacman
+pacman -U --noconfirm /tmp/blossomos-installer-0.0.1.pacman
+rm -f /tmp/blossomos-installer-0.0.1.pacman
 
 # Install themes and icons
 git clone https://github.com/L4ki/Breeze-Chameleon-Icons /tmp/Breeze-Chameleon-Icons
