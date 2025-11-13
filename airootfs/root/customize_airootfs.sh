@@ -4,6 +4,11 @@
 
 echo "Setting up blossomOS..."
 
+# Set up /etc/skel with default user configuration
+chmod +x /etc/skel/.config/sway/status.sh
+chmod +x /etc/skel/.config/sway/autorun.sh
+chmod +x /etc/profile.d/recovery
+
 # Create Live user
 useradd -m -G wheel liveuser
 echo "liveuser:live" | chpasswd
@@ -34,11 +39,6 @@ echo "blossomos" > /etc/hostname
 
 # Configure sudoers for wheel group
 echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
-
-# Create a script to auto-start Sway
-chmod +x /root/.config/sway/status.sh
-chmod +x /root/.config/sway/autorun.sh
-chmod +x /etc/profile.d/recovery
 
 # Cleanup root fs
 pacman -Rns --noconfirm $(pacman -Qdtq) || true
