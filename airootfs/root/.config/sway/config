@@ -16,9 +16,6 @@ bar {
     # Disable workspace buttons
     workspace_buttons no
 
-    # Bind tray clicks
-    tray_bindcode ContextMenu
-
     colors {
         statusline #000000
         background #808080
