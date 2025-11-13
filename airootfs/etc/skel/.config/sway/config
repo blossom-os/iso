@@ -41,5 +41,17 @@ exec gsettings set org.gnome.desktop.interface cursor-theme "Bibata-Modern-Class
 # xfce-polkit for privilege escalation dialogs
 exec /usr/lib/xfce-polkit/xfce-polkit
 
+# Wallpaper
+output * bg ~/.bg.png fill
+
+# Window styles
+client.focused #ffffff #202326 #000000
+client.focused_inactive #333333 #202326 #ffffff
+client.focused_tab_title #ffffff #202326 #000000
+client.unfocused #333333 #202326 #ffffff
+client.urgent #888888 #202326 #ffffff
+default_border normal
+default_floating_border normal
+
 # Auto-launch homeOS recovery on startup
 exec /root/.config/sway/autorun.sh
