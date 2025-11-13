@@ -38,5 +38,8 @@ exec gsettings set org.gnome.desktop.interface gtk-theme "Breeze-Dark"
 exec gsettings set org.gnome.desktop.interface icon-theme "Breeze Chameleon Dark"
 exec gsettings set org.gnome.desktop.interface cursor-theme "Bibata-Modern-Classic"
 
+# xfce-polkit for privilege escalation dialogs
+exec /usr/lib/xfce-polkit/xfce-polkit
+
 # Auto-launch homeOS recovery on startup
 exec /root/.config/sway/autorun.sh

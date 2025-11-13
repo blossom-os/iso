@@ -8,6 +8,8 @@ echo "Setting up homeOS..."
 useradd -m -G wheel liveuser
 echo "liveuser:live" | chpasswd
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
+cp -r /etc/skel /home/liveuser/
+chown -R liveuser:liveuser /home/liveuser/
 
 # Add repos
 pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
