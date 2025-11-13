@@ -66,9 +66,8 @@ jobs:
           cd /workspace
           
           # Copy the releng profile as a base
-          cp -r /usr/share/archiso/configs/releng ./archiso-config
-          cp -r /workspace/archiso-custom/releng ./archiso-config
-          rm ./archiso-config/efiboot/loader/entries/02-archiso-speech-linux.conf
+          cp -r /usr/share/archiso/configs/baseline ./archiso-config
+          cp -r /workspace/archiso-custom/ ./archiso-config
           
           # Customize the profile
           cd archiso-config
