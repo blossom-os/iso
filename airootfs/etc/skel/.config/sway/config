@@ -28,7 +28,7 @@ bar {
 
 set $mod Mod4
 bindsym $mod+Return exec kitty
-bindsym $mod+Shift+e exec /root/.config/sway/autorun.sh
+bindsym $mod+Shift+e exec /home/liveuser/.config/sway/autorun.sh
 
 # Network applet
 exec nm-applet
@@ -54,4 +54,4 @@ default_border normal
 default_floating_border normal
 
 # Auto-launch blossomOS recovery on startup
-exec /root/.config/sway/autorun.sh
+exec /home/liveuser/.config/sway/autorun.sh

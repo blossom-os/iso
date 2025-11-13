@@ -7,13 +7,13 @@ echo "Setting up blossomOS..."
 # Set up /etc/skel with default user configuration
 chmod +x /etc/skel/.config/sway/status.sh
 chmod +x /etc/skel/.config/sway/autorun.sh
-chmod +x /etc/profile.d/recovery
+chmod +x /etc/skel/.bashrc
 
 # Create Live user
 useradd -m -G wheel liveuser
 echo "liveuser:live" | chpasswd
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
-cp -r /etc/skel /home/liveuser/
+cp -ra /etc/skel/. /home/liveuser/
 chown -R liveuser:liveuser /home/liveuser/
 
 # Install themes and icons
@@ -44,8 +44,5 @@ echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 pacman -Rns --noconfirm $(pacman -Qdtq) || true
 pacman -Scc --noconfirm
 rm -rf /tmp/* /var/tmp/* /var/cache/*
-
-# Set up Sway configuration directory
-mkdir -p /root/.config/sway
 
 echo "blossomOS setup complete!"
