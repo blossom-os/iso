@@ -85,7 +85,7 @@ docker exec "$CONTAINER_NAME" bash -c "
     # Copy custom boot files if they exist
     if [ -d /workspace/archiso-custom ]; then
         cp -r /workspace/archiso-custom/ ./archiso-config/work/iso/boot
-        rm -f ./archiso-config/work/iso/boot/efiboot/loader/entries/02-archiso-speech-linux.conf
+        rm -f ./archiso-config/work/iso/boot/loader/entries/02-archiso-speech-linux.conf
         rm -f ./archiso-config/work/iso/boot/syslinux/splash.png
     fi
 
