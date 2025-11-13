@@ -18,14 +18,12 @@ echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
 cp -ra /etc/skel/. /home/liveuser/
 chown -R liveuser:liveuser /home/liveuser/
 
+# Install additional packages
+pacman -Syu --noconfirm
+pacman -U --noconfirm /packages/http-parser-2.9.4-2-x86_64.pkg.tar.zst
+pacman -U --noconfirm /packages/blossomos-installer-0.0.1.pacman
+
 # Install themes and icons
-git clone https://github.com/L4ki/Breeze-Chameleon-Icons /tmp/Breeze-Chameleon-Icons
-cp -r /tmp/Breeze-Chameleon-Icons/* /usr/share/icons/
-rm -rf /usr/share/icons/README.md
-rm -rf /usr/share/icons/LICENSE
-rm -rf /usr/share/icons/AUTHORS
-rm -rf /usr/share/icons/.git
-rm -rf /tmp/Breeze-Chameleon-Icons
 wget -O /tmp/Bibata_Cursor.tar.gz https://github.com/ful1e5/Bibata_Cursor/releases/download/v2.0.7/Bibata-Modern-Classic.tar.xz
 tar -xvf /tmp/Bibata_Cursor.tar.gz -C /usr/share/icons/
 rm -rf /tmp/Bibata_Cursor.tar.gz
