@@ -11,7 +11,7 @@ chmod +x /etc/skel/.bashrc
 
 # Create Live user
 useradd -m -G wheel liveuser
-echo "liveuser:live" | chpasswd
+echo "liveuser:*" | chpasswd -e
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 cp -ra /etc/skel/. /home/liveuser/
 chown -R liveuser:liveuser /home/liveuser/
