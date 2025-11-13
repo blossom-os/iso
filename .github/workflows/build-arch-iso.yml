@@ -30,9 +30,24 @@ jobs:
 
     - name: Free up disk space
       run: |
+        # Remove large unused software
         sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+        sudo rm -rf /usr/local/share/boost /opt/microsoft /usr/share/swift
+        sudo rm -rf /usr/local/graalvm /usr/local/share/powershell /usr/share/gradle*
+        sudo rm -rf /tmp/* /var/tmp/* || true
+        
+        # Clean package caches
+        sudo apt-get clean
+        sudo apt-get autoremove -y
+        
+        # Clean Docker
         sudo docker image prune --all --force
+        sudo docker system prune --all --force --volumes
+        
+        # Show disk usage
         df -h
+        echo "Available space after cleanup:"
+        df -h /
 
     - name: Set up blossomOS environment
       run: |
@@ -78,6 +93,19 @@ jobs:
           # Add extra packages
           if [ -f /workspace/packages.x86_64 ]; then
             cat /workspace/packages.x86_64 >> packages.x86_64
+          fi
+
+          # Copy packages to airootfs
+          if [ -d /workspace/packages ]; then
+            mkdir -p airootfs/usr/local/packages
+            cp /workspace/packages/* airootfs/usr/local/packages/ 2>/dev/null || true
+          fi
+
+          # Create repository database for local packages
+          if [ -d /workspace/packages ]; then
+            arch-chroot airootfs pacman -Sy
+            arch-chroot airootfs pacman -U --noconfirm /usr/local/packages/* || true
+            arch-chroot airootfs repo-add /usr/local/packages/custom.db.tar.gz /usr/local/packages/*.pkg.tar.* || true
           fi
 
           # Copy airootfs overlays

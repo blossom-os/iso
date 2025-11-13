@@ -18,11 +18,6 @@ echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
 cp -ra /etc/skel/. /home/liveuser/
 chown -R liveuser:liveuser /home/liveuser/
 
-# Install additional packages
-pacman -Syu --noconfirm
-pacman -U --noconfirm /packages/http-parser-2.9.4-2-x86_64.pkg.tar.zst
-pacman -U --noconfirm /packages/blossomos-installer-0.0.1.pacman
-
 # Install themes and icons
 wget -O /tmp/Bibata_Cursor.tar.gz https://github.com/ful1e5/Bibata_Cursor/releases/download/v2.0.7/Bibata-Modern-Classic.tar.xz
 tar -xvf /tmp/Bibata_Cursor.tar.gz -C /usr/share/icons/

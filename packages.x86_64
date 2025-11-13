@@ -67,3 +67,7 @@ polkit-gnome
 # Themes
 breeze-gtk
 breeze-icons
+
+# Additional custom packages for blossomOS
+http-parser
+blossomos-installer
