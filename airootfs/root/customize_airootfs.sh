@@ -14,7 +14,7 @@ useradd liveuser
 usermod -aG video,audio,optical,storage,wheel liveuser
 echo "liveuser:*" | chpasswd -e
 passwd -d liveuser
-echo "%wheel      ALL=(ALL:ALL) ALL" >> /etc/sudoers
+echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
 cp -ra /etc/skel/. /home/liveuser/
 chown -R liveuser:liveuser /home/liveuser/
 
