@@ -1,12 +1,9 @@
 #!/bin/bash
 
-# Clear console on login
-clear
-
 # Auto-start Sway on TTY1
 if [ -z "$WAYLAND_DISPLAY" ]; then
     # Ensure a runtime dir exists for the root session
-    export XDG_RUNTIME_DIR="/run/user/0"
+    export XDG_RUNTIME_DIR="/run/user/$(id -u)"
     mkdir -p "$XDG_RUNTIME_DIR"
     chmod 700 "$XDG_RUNTIME_DIR" || true
 

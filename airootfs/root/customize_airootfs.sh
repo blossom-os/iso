@@ -4,6 +4,24 @@
 
 echo "Setting up homeOS..."
 
+# Create Live user
+useradd -m -G wheel liveuser
+echo "liveuser:live" | chpasswd
+sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
+
+# Add repos
+pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+pacman-key --lsign-key 3056513887B78AEB
+pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
+pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
+pacman -Syu --noconfirm
+
+# Install yay and xfce-polkit
+pacman -S --noconfirm yay
+su - liveuser -c "yay -S --noconfirm xfce-polkit"
+
+# Install themes and icons
 git clone https://github.com/L4ki/Breeze-Chameleon-Icons /tmp/Breeze-Chameleon-Icons
 cp -r /tmp/Breeze-Chameleon-Icons/* /usr/share/icons/
 rm -rf /usr/share/icons/README.md
