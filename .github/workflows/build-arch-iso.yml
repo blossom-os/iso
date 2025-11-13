@@ -103,9 +103,8 @@ jobs:
 
           # Create repository database for local packages
           if [ -d /workspace/packages ]; then
-            arch-chroot airootfs pacman -Sy
-            arch-chroot airootfs pacman -U --noconfirm /usr/local/packages/* || true
-            arch-chroot airootfs repo-add /usr/local/packages/custom.db.tar.gz /usr/local/packages/*.pkg.tar.* || true
+            pacman -r airootfs -U /workspace/packages/*.pkg.tar.* --noconfirm
+            repo-add airootfs/usr/local/packages/custom.db.tar.gz /workspace/packages/*.pkg.tar.*
           fi
 
           # Copy airootfs overlays
