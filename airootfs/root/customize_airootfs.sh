@@ -16,14 +16,6 @@ sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 cp -ra /etc/skel/. /home/liveuser/
 chown -R liveuser:liveuser /home/liveuser/
 
-# Install additional packages
-wget -O http-parser-2.9.4-2-x86_64.pkg.tar.zst https://cdn.blossom-os.com/http-parser-2.9.4-2-x86_64.pkg.tar.zst
-pacman -U --noconfirm http-parser-2.9.4-2-x86_64.pkg.tar.zst
-rm -f http-parser-2.9.4-2-x86_64.pkg.tar.zst
-wget -O /tmp/blossomos-installer-0.0.1.pacman https://cdn.blossom-os.com/blossomos-installer-0.0.1.pacman
-pacman -U --noconfirm /tmp/blossomos-installer-0.0.1.pacman
-rm -f /tmp/blossomos-installer-0.0.1.pacman
-
 # Install themes and icons
 git clone https://github.com/L4ki/Breeze-Chameleon-Icons /tmp/Breeze-Chameleon-Icons
 cp -r /tmp/Breeze-Chameleon-Icons/* /usr/share/icons/
