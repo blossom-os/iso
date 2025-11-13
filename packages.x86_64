@@ -66,6 +66,3 @@ polkit-gnome
 # Themes
 breeze-gtk
 breeze-icons
-
-# Miscellaneous
-grub

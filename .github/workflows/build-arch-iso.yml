@@ -68,6 +68,9 @@ jobs:
           # Copy the releng profile as a base
           cp -r /usr/share/archiso/configs/baseline ./archiso-config
           cp -r /workspace/archiso-custom/ ./archiso-config
+
+          # Install GRUB
+          pacman -Sy --noconfirm grub
           
           # Customize the profile
           cd archiso-config
