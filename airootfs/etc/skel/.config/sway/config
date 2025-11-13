@@ -8,30 +8,9 @@ input type:touchpad {
 
 for_window [title="."] floating enable
 
-bar {
-    position top
-    # Keep in mind that the current directory of this config file is $HOME
-    status_command while ~/.config/sway/status.sh; do sleep 0.1; done
-
-    # Disable workspace buttons
-    workspace_buttons no
-
-    colors {
-        statusline #000000
-        background #808080
-        inactive_workspace #808080 #808080 #5c5c5c
-        focused_workspace #000000 #000000 #ffffff
-    }
-
-    font pango:DejaVu Sans Mono 10
-}
-
 set $mod Mod4
 bindsym $mod+Return exec kitty
 bindsym $mod+Shift+e exec /home/liveuser/.config/sway/autorun.sh
-
-# Network applet
-exec nm-applet
 
 # Set theme
 exec gsettings set org.gnome.desktop.interface gtk-theme "Breeze-Dark"
@@ -45,13 +24,7 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 output * bg ~/.bg.png fill
 
 # Window styles
-client.focused #ffffff #202326 #000000
-client.focused_inactive #333333 #202326 #ffffff
-client.focused_tab_title #ffffff #202326 #000000
-client.unfocused #333333 #202326 #ffffff
-client.urgent #888888 #202326 #ffffff
-default_border normal
-default_floating_border normal
+default_border none
 
 # Auto-launch blossomOS recovery on startup
 exec /home/liveuser/.config/sway/autorun.sh

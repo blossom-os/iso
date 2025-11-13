@@ -92,6 +92,7 @@ jobs:
           if [ -f /workspace/archiso-custom/efiboot/loader/entries/custom.conf ]; then
             mkdir -p efiboot/loader/entries
             cp /workspace/archiso-custom/efiboot/loader/entries/custom.conf efiboot/loader/entries/
+            rm -f efiboot/loader/entries/02-archiso-speech-linux.conf
           fi
         "
 

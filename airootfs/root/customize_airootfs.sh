@@ -16,6 +16,9 @@ sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 cp -ra /etc/skel/. /home/liveuser/
 chown -R liveuser:liveuser /home/liveuser/
 
+# Install additional packages
+pacman -U https://cdn.blossom-os.com/blossomos-installer-0.0.1.pacman
+
 # Install themes and icons
 git clone https://github.com/L4ki/Breeze-Chameleon-Icons /tmp/Breeze-Chameleon-Icons
 cp -r /tmp/Breeze-Chameleon-Icons/* /usr/share/icons/
