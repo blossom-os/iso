@@ -24,6 +24,7 @@ wireplumber
 brightnessctl
 grim
 slurp
+open-vm-tools
 
 # Text editors
 vim
