@@ -30,7 +30,7 @@ echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 # Create a script to auto-start Sway
 chmod +x /root/.config/sway/status.sh
 chmod +x /root/.config/sway/autorun.sh
-chmod +x /root/.bash_profile
+chmod +x /etc/profile.d/recovery
 
 # Cleanup root fs
 pacman -Rns --noconfirm $(pacman -Qdtq) || true
