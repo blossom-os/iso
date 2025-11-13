@@ -38,8 +38,8 @@ exec gsettings set org.gnome.desktop.interface gtk-theme "Breeze-Dark"
 exec gsettings set org.gnome.desktop.interface icon-theme "Breeze Chameleon Dark"
 exec gsettings set org.gnome.desktop.interface cursor-theme "Bibata-Modern-Classic"
 
-# xfce-polkit for privilege escalation dialogs
-exec /usr/lib/xfce-polkit/xfce-polkit
+# GNOME Polkit agent
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 # Wallpaper
 output * bg ~/.bg.png fill

@@ -61,6 +61,7 @@ kitty
 yad
 timeshift
 gparted
+polkit-gnome
 
 # Themes
 breeze-gtk
