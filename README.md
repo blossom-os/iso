@@ -1,1 +1,1 @@
-# homeOS ISO builder
+# blossomOS ISO builder

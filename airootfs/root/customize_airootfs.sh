@@ -1,8 +1,8 @@
 #!/bin/bash
-# Custom setup script for homeOS
+# Custom setup script for blossomOS
 # This script runs during the ISO boot process
 
-echo "Setting up homeOS..."
+echo "Setting up blossomOS..."
 
 # Create Live user
 useradd -m -G wheel liveuser
@@ -30,7 +30,7 @@ ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 systemctl enable NetworkManager
 
 # Set hostname
-echo "homeos" > /etc/hostname
+echo "blossomos" > /etc/hostname
 
 # Configure sudoers for wheel group
 echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
@@ -48,4 +48,4 @@ rm -rf /tmp/* /var/tmp/* /var/cache/*
 # Set up Sway configuration directory
 mkdir -p /root/.config/sway
 
-echo "homeOS setup complete!"
+echo "blossomOS setup complete!"

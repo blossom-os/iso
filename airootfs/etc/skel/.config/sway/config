@@ -1,4 +1,4 @@
-# homeOS Sway (Install environment) Configuration
+# blossomOS Sway (Install environment) Configuration
 
 # Input configuration
 input type:touchpad {
@@ -53,5 +53,5 @@ client.urgent #888888 #202326 #ffffff
 default_border normal
 default_floating_border normal
 
-# Auto-launch homeOS recovery on startup
+# Auto-launch blossomOS recovery on startup
 exec /root/.config/sway/autorun.sh

@@ -1,11 +1,11 @@
 #!/bin/bash
 
 while true; do
-    choice=$(yad --list --title="homeOS Recovery" \
+    choice=$(yad --list --title="blossomOS Recovery" \
         --text="Select an action:" \
         --column="Action" --column="Description" \
         "Timeshift" "Restore from backup" \
-        "Installer" "(Re)install homeOS to disk" \
+        "Installer" "(Re)install blossomOS to disk" \
         "Terminal" "Open terminal" \
         "Browser" "Open web browser" \
         "Disk Utility" "Repair or erase a disk using GParted" \
@@ -17,10 +17,10 @@ while true; do
 
     case "$choice" in
         "Installer")
-            if [ -x "/usr/bin/homeos-installer" ]; then
-                /usr/bin/homeos-installer
+            if [ -x "/usr/bin/blossomos-installer" ]; then
+                /usr/bin/blossomos-installer
             else
-                yad --error --text="homeOS installer not found"
+                yad --error --text="blossomOS installer not found"
             fi
             ;;
         "Timeshift")
