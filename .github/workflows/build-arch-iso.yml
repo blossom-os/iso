@@ -48,27 +48,51 @@ jobs:
     - name: Prepare archiso profile
       run: |
         docker exec archlinux-builder bash -c "
+          set -e
           cd /workspace
-          cp -r /usr/share/archiso/configs/releng ./archiso-config
-          cp -r /workspace/archiso-custom/ ./archiso-config/work/iso/boot
-          rm -f ./archiso-config/work/iso/boot/efiboot/loader/entries/02-archiso-speech-linux.conf
-          rm -f ./archiso-config/work/iso/boot/syslinux/splash.png
 
-          pacman -Sy --noconfirm grub
-          
+          # Copy base releng profile
+          cp -r /usr/share/archiso/configs/releng ./archiso-config
+
+          # Copy custom files into profile
+          if [ -d /workspace/archiso-custom ]; then
+            cp -r /workspace/archiso-custom/* ./archiso-config/ 2>/dev/null || true
+          fi
+
           cd archiso-config
+
+          # Change ISO name and label
           sed -i 's/iso_name=\"archlinux\"/iso_name=\"${{ env.ISO_NAME }}\"/' profiledef.sh
           sed -i 's/iso_label=\"ARCH_\$(date +%Y%m)\"/iso_label=\"$(echo ${{ env.ISO_NAME }} | tr '[:lower:]' '[:upper:]')_\$(date +%Y%m)\"/' profiledef.sh
-          
+
+          # Remove Syslinux splash
+          if [ -f syslinux/splash.png ]; then
+            rm syslinux/splash.png
+          fi
+
+          # Optional: copy custom Syslinux config
+          if [ -f /workspace/archiso-custom/syslinux/isolinux.cfg ]; then
+            cp /workspace/archiso-custom/syslinux/isolinux.cfg syslinux/
+          fi
+
+          # Add extra packages
           if [ -f /workspace/packages.x86_64 ]; then
             cat /workspace/packages.x86_64 >> packages.x86_64
           fi
-          
+
+          # Copy airootfs overlays
           if [ -d /workspace/airootfs ]; then
             cp -r /workspace/airootfs/* airootfs/ 2>/dev/null || true
           fi
-          
+
+          # Make all scripts executable
           find airootfs -type f -name '*.sh' -exec chmod +x {} \\;
+
+          # EFI GRUB config
+          if [ -f /workspace/archiso-custom/efiboot/loader/entries/custom.conf ]; then
+            mkdir -p efiboot/loader/entries
+            cp /workspace/archiso-custom/efiboot/loader/entries/custom.conf efiboot/loader/entries/
+          fi
         "
 
     - name: Build ISO
