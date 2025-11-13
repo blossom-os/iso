@@ -10,9 +10,11 @@ chmod +x /etc/skel/.config/sway/autorun.sh
 chmod +x /etc/skel/.bashrc
 
 # Create Live user
-useradd -m -G wheel liveuser
+useradd liveuser
+usermod -aG video,audio,optical,storage,wheel liveuser
 echo "liveuser:*" | chpasswd -e
-sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
+passwd -d liveuser
+echo "%wheel      ALL=(ALL:ALL) ALL" >> /etc/sudoers
 cp -ra /etc/skel/. /home/liveuser/
 chown -R liveuser:liveuser /home/liveuser/
 
