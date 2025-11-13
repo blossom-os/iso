@@ -26,6 +26,7 @@ brightnessctl
 grim
 slurp
 open-vm-tools
+swaybg
 
 # Text editors
 vim
