@@ -4,7 +4,7 @@
 clear
 
 # Auto-start Sway on TTY1
-if [ -z "$WAYLAND_DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
+if [ -z "$WAYLAND_DISPLAY" ]; then
     # Ensure a runtime dir exists for the root session
     export XDG_RUNTIME_DIR="/run/user/0"
     mkdir -p "$XDG_RUNTIME_DIR"

@@ -23,10 +23,11 @@ bar {
     font pango:DejaVu Sans Mono 10
 }
 
+set $mod Mod4
 bindsym $mod+Return exec kitty
-bindsym $mod+Shift+e exec ~/.config/sway/autorun.sh
+bindsym $mod+Shift+e exec /root/.config/sway/autorun.sh
 
 exec nm-applet
 
-# Auto-launch homeOS launcher on startup
+# Auto-launch homeOS recovery on startup
 exec /root/.config/sway/autorun.sh

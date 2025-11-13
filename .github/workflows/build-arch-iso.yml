@@ -67,6 +67,7 @@ jobs:
           
           # Copy the releng profile as a base
           cp -r /usr/share/archiso/configs/releng ./archiso-config
+          cp -r /workspace/airootfs/usr/share/archiso/configs/releng ./archiso-config/
           rm ./archiso-config/efiboot/loader/entries/02-archiso-speech-linux.conf
           
           # Customize the profile

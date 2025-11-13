@@ -56,6 +56,6 @@ ttf-dejavu
 kitty
 
 # GUI utilities
-zenity
+yad
 timeshift
 gparted

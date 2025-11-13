@@ -3,7 +3,7 @@
 # homeOS Recovery - Zenity menu for common tasks
 
 while true; do
-    choice=$(zenity --list \
+    choice=$(yad --list \
         --title="homeOS Recovery" \
         --text="Select an action:" \
         --column="Action" \
