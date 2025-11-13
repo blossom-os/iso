@@ -4,6 +4,17 @@
 
 echo "Setting up homeOS..."
 
+git clone https://github.com/L4ki/Breeze-Chameleon-Icons /tmp/Breeze-Chameleon-Icons
+cp -r /tmp/Breeze-Chameleon-Icons/* /usr/share/icons/
+rm -rf /usr/share/icons/README.md
+rm -rf /usr/share/icons/LICENSE
+rm -rf /usr/share/icons/AUTHORS
+rm -rf /usr/share/icons/.git
+rm -rf /tmp/Breeze-Chameleon-Icons
+wget -O /tmp/Bibata_Cursor.tar.gz https://github.com/ful1e5/Bibata_Cursor/releases/download/v2.0.7/Bibata-Modern-Classic.tar.xz
+tar -xvf /tmp/Bibata_Cursor.tar.gz -C /usr/share/icons/
+rm -rf /tmp/Bibata_Cursor.tar.gz
+
 # Set timezone to UTC (change as needed)
 ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 
