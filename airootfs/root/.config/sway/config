@@ -13,6 +13,12 @@ bar {
     # Keep in mind that the current directory of this config file is $HOME
     status_command while ~/.config/sway/status.sh; do sleep 0.1; done
 
+    # Disable workspace buttons
+    workspace_buttons no
+
+    # Bind tray clicks
+    tray_bindcode ContextMenu
+
     colors {
         statusline #000000
         background #808080

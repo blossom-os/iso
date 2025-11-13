@@ -97,4 +97,4 @@ fi
 
 # Emojis and characters for the status bar
 # 💎 💻 💡 🔌 ⚡ 📁 \|
-echo "$date_formatted | "
+echo "homeOS Recovery Environment | $date_formatted | "
