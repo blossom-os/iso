@@ -73,9 +73,9 @@ jobs:
 
           # Add custom local packages
           if [ -d /workspace/packages ]; then
-            mkdir -p airootfs/usr/local/packages
-            cp /workspace/packages/*.pkg.tar.* airootfs/usr/local/packages/
-            repo-add airootfs/usr/local/packages/custom.db.tar.gz airootfs/usr/local/packages/*.pkg.tar.*
+            for pkg in /workspace/packages/*.pkg.tar.zst; do
+                zstd -d "$pkg" -c | tar -x -C /tmp/pkg_extract
+            done
           fi
 
           # Append extra packages from repo file
