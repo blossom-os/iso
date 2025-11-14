@@ -10,3 +10,7 @@ if [ -z "$WAYLAND_DISPLAY" ]; then
     # Start Sway inside a dbus session for session services
     exec dbus-run-session -- /usr/bin/sway
 fi
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
