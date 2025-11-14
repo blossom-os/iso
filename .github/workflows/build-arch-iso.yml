@@ -71,15 +71,6 @@ jobs:
           # Make scripts executable
           find airootfs -type f -name '*.sh' -exec chmod +x {} \;
 
-          # Add custom local packages
-          pacman -S --noconfirm zstd
-          if [ -d /workspace/packages ]; then
-            for pkg in /workspace/packages/*.pkg.tar.zst; do
-              tar -C /workspace/airootfs --zstd -xvf "$pkg"
-              rm -f /workspace/airootfs/.MTREE /workspace/airootfs/.PKGINFO /workspace/airootfs/.INSTALL
-            done
-          fi
-
           # Append extra packages from repo file
           if [ -f /workspace/packages.x86_64 ]; then
             cat /workspace/packages.x86_64 >> packages.x86_64
@@ -90,6 +81,19 @@ jobs:
       run: |
         docker exec archlinux-builder bash -c "
           cd /workspace/archiso-config
+          
+          # Install custom packages into the archiso build environment
+          if [ -d /workspace/packages ]; then
+            echo 'Installing custom packages during build...'
+            for pkg in /workspace/packages/*.pkg.tar.zst; do
+              if [ -f \"\$pkg\" ]; then
+                echo \"Installing: \$(basename \"\$pkg\")\"
+                # Install package into the build root
+                pacman -U --noconfirm --root ./airootfs \"\$pkg\" || echo \"Failed to install \$(basename \"\$pkg\")\"
+              fi
+            done
+          fi
+          
           mkarchiso -v -w work -o out .
           mv ./out/*.iso /workspace/
         "
