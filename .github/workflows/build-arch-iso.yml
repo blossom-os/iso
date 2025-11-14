@@ -91,8 +91,8 @@ jobs:
         docker exec archlinux-builder bash -c "
           cd /workspace/archiso-config
           mkarchiso -v -w work -o out .
+          mv /*.iso /workspace/
         "
-        mv out/*.iso /workspace/
 
     - name: Get ISO info
       id: iso_info
