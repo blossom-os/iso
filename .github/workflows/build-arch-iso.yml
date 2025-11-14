@@ -75,14 +75,7 @@ jobs:
           if [ -d /workspace/packages ]; then
             mkdir -p airootfs/usr/local/packages
             cp /workspace/packages/*.pkg.tar.* airootfs/usr/local/packages/
-
-            # Create local repo inside airootfs
             repo-add airootfs/usr/local/packages/custom.db.tar.gz airootfs/usr/local/packages/*.pkg.tar.*
-
-            # Update pacman.conf to include local repo
-            echo '[local]
-            SigLevel = Optional TrustAll
-            Server = file:///usr/local/packages' >> pacman.conf
 
             # Write package names to packages.x86_64 (strip version info)
             ls /workspace/packages/*.pkg.tar.* | xargs -n1 basename | sed -E 's/-[0-9]+.*\.pkg\.tar.*//' > packages.x86_64
