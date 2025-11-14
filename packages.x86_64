@@ -6,6 +6,13 @@ base
 base-devel
 linux
 linux-firmware
+syslinux
+memtest86+
+memtest86+-efi
+edk2-shell
+arch-install-scripts
+mkinitcpio
+mkinitcpio-archiso
 bash
 sudo
 
