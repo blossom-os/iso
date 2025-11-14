@@ -76,9 +76,6 @@ jobs:
             mkdir -p airootfs/usr/local/packages
             cp /workspace/packages/*.pkg.tar.* airootfs/usr/local/packages/
             repo-add airootfs/usr/local/packages/custom.db.tar.gz airootfs/usr/local/packages/*.pkg.tar.*
-
-            # Write package names to packages.x86_64 (strip version info)
-            ls /workspace/packages/*.pkg.tar.* | xargs -n1 basename | sed -E 's/-[0-9]+.*\.pkg\.tar.*//' > packages.x86_64
           fi
 
           # Append extra packages from repo file
