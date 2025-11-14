@@ -95,16 +95,14 @@ jobs:
             cat /workspace/packages.x86_64 >> packages.x86_64
           fi
 
-          # Copy packages to airootfs
-          if [ -d /workspace/packages ]; then
-            mkdir -p airootfs/usr/local/packages
-            cp /workspace/packages/* airootfs/usr/local/packages/ 2>/dev/null || true
-          fi
-
           # Create repository database for local packages
           if [ -d /workspace/packages ]; then
-            pacman -r airootfs -U /workspace/packages/*.pkg.tar.* --noconfirm
-            repo-add airootfs/usr/local/packages/custom.db.tar.gz /workspace/packages/*.pkg.tar.*
+            mkdir -p airootfs/{var/lib/pacman/local,etc/pacman.d}
+            touch airootfs/var/lib/pacman/local/.placeholder
+            mkdir -p airootfs/usr/local/packages
+            cp /workspace/packages/*.pkg.tar.* airootfs/usr/local/packages/
+            pacman -r airootfs -U airootfs/usr/local/packages/*.pkg.tar.* --noconfirm || true
+            repo-add airootfs/usr/local/packages/custom.db.tar.gz airootfs/usr/local/packages/*.pkg.tar.*
           fi
 
           # Copy airootfs overlays
