@@ -82,14 +82,15 @@ jobs:
         docker exec archlinux-builder bash -c "
           cd /workspace/archiso-config
           
-          # Install custom packages into the archiso build environment
+          # Extract custom packages directly into airootfs
           if [ -d /workspace/packages ]; then
-            echo 'Installing custom packages during build...'
+            echo 'Extracting custom packages...'
             for pkg in /workspace/packages/*.pkg.tar.zst; do
               if [ -f \"\$pkg\" ]; then
-                echo \"Installing: \$(basename \"\$pkg\")\"
-                # Install package into the build root
-                pacman -U --noconfirm --root ./airootfs \"\$pkg\" || echo \"Failed to install \$(basename \"\$pkg\")\"
+                echo \"Extracting: \$(basename \"\$pkg\")\"
+                tar -C ./airootfs --zstd -xf \"\$pkg\"
+                # Remove package metadata files
+                rm -f ./airootfs/.MTREE ./airootfs/.PKGINFO ./airootfs/.INSTALL ./airootfs/.BUILDINFO
               fi
             done
           fi
