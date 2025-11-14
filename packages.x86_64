@@ -89,3 +89,6 @@ re2
 snappy
 libnotify
 libappindicator-gtk3
+curl
+unzip
+git

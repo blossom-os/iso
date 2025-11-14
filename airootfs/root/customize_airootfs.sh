@@ -17,6 +17,7 @@ passwd -d liveuser
 echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
 cp -ra /etc/skel/. /home/liveuser/
 chown -R liveuser:liveuser /home/liveuser/
+sudo -u liveuser bash -c 'curl -fsSL https://bun.sh/install | bash'
 
 # Install themes and icons
 wget -O /tmp/Bibata_Cursor.tar.gz https://github.com/ful1e5/Bibata_Cursor/releases/download/v2.0.7/Bibata-Modern-Classic.tar.xz

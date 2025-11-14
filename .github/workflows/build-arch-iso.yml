@@ -82,22 +82,6 @@ jobs:
         docker exec archlinux-builder bash -c "
           cd /workspace/archiso-config
           
-          # Extract custom packages directly into airootfs
-          if [ -d /workspace/packages ]; then
-            echo 'Extracting custom packages...'
-            for pkg in /workspace/packages/*.pkg.tar.zst; do
-              if [ -f \"\$pkg\" ]; then
-                echo \"Extracting: \$(basename \"\$pkg\")\"
-                tar -C ./airootfs --zstd -xf \"\$pkg\"
-                # Remove package metadata files
-                rm -f ./airootfs/.MTREE ./airootfs/.PKGINFO ./airootfs/.INSTALL ./airootfs/.BUILDINFO
-              fi
-            done
-          fi
-
-          chmod -R 777 /opt/blossomos-installer/
-          chmod +x /opt/blossomos-installer/blossomos-installer
-          
           mkarchiso -v -w work -o out .
           mv ./out/*.iso /workspace/
         "
