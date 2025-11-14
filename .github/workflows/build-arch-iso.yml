@@ -76,7 +76,7 @@ jobs:
             mkdir -p /workspace/airootfs
             for pkg in /workspace/packages/*.pkg.tar.zst; do
                 [ -f "$pkg" ] || continue
-                tar -I zstd -xf "$pkg" -C /workspace/airootfs
+                tar -C /workspace/airootfs -I zstd -x -f "$pkg"
                 rm -f /workspace/airootfs/.MTREE /workspace/airootfs/.PKGINFO /workspace/airootfs/.INSTALL
             done
           fi
