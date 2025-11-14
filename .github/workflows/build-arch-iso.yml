@@ -11,7 +11,7 @@ on:
         description: 'Upload to Cloudflare R2'
         required: false
         type: boolean
-        default: false
+        default: true
 
 env:
   ISO_NAME: ${{ inputs.iso_name || 'blossomOS' }}
