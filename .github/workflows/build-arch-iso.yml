@@ -72,9 +72,10 @@ jobs:
           find airootfs -type f -name '*.sh' -exec chmod +x {} \;
 
           # Add custom local packages
+          pacman -S --noconfirm zstd
           if [ -d /workspace/packages ]; then
             for pkg in /workspace/packages/*.pkg.tar.zst; do
-              zstd -d -c $pkg | tar -xvf - -C /workspace/airootfs
+              tar -C /workspace/airootfs --zstd -xvf "$pkg"
               rm -f /workspace/airootfs/.MTREE /workspace/airootfs/.PKGINFO /workspace/airootfs/.INSTALL
             done
           fi
