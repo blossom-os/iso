@@ -100,6 +100,9 @@ jobs:
             mkdir -p airootfs/{var/lib/pacman/local,etc/pacman.d}
             touch airootfs/var/lib/pacman/local/.placeholder
             mkdir -p airootfs/usr/local/packages
+            mkdir -p /workspace/archiso-config/work/x86_64/airootfs/var/lib/pacman
+            pacman-db-upgrade -r /workspace/archiso-config/work/x86_64/airootfs
+            rm -rf /workspace/archiso-config/work/x86_64/airootfs/var/lib/pacman/sync/*
             cp /workspace/packages/*.pkg.tar.* airootfs/usr/local/packages/
             pacman -r airootfs -U airootfs/usr/local/packages/*.pkg.tar.* --noconfirm || true
             repo-add airootfs/usr/local/packages/custom.db.tar.gz airootfs/usr/local/packages/*.pkg.tar.*
