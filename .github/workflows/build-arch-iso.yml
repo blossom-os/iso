@@ -92,7 +92,7 @@ jobs:
           cd /workspace/archiso-config
           mkarchiso -v -w work -o out .
         "
-        mv archiso-config/out/*.iso ./ || true
+        mv out/*.iso /workspace/
 
     - name: Get ISO info
       id: iso_info
