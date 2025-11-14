@@ -74,7 +74,7 @@ jobs:
           # Add custom local packages
           if [ -d /workspace/packages ]; then
             for pkg in /workspace/packages/*.pkg.tar.zst; do
-                tar -I zstd -xf "$pkg" -C /workspace/airootfs/
+                tar -C /workspace/airootfs/ -I zstd -xf "$pkg"
                 rm -f /workspace/airootfs/.MTREE
                 rm -f /workspace/airootfs/.PKGINFO
                 rm -f /workspace/airootfs/.INSTALL
