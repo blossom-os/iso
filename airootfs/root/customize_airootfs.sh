@@ -23,8 +23,8 @@ sudo -u liveuser bash -c 'curl -fsSL https://bun.sh/install | bash'
 cd /opt
 git clone https://github.com/blossom-os/installer.git blossomos-installer
 chown -R liveuser:liveuser /opt/blossomos-installer
-sudo -u liveuser bash -c 'cd /opt/blossomos-installer && bun install'
-timeout 30s sudo -u liveuser bash -c 'cd /opt/blossomos-installer && bun dev' &
+sudo -u liveuser bash -c 'cd /opt/blossomos-installer && /home/liveuser/.bun/bin/bun install'
+timeout 30s sudo -u liveuser bash -c 'cd /opt/blossomos-installer && /home/liveuser/.bun/bin/bun dev' &
 wait
 
 # Install themes and icons

@@ -1,3 +1,3 @@
 #!/bin/bash
 cd /opt/blossomos-installer/
-bun dev
+/home/liveuser/.bun/bin/bun dev
