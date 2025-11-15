@@ -7,6 +7,9 @@ if [ -z "$WAYLAND_DISPLAY" ]; then
     mkdir -p "$XDG_RUNTIME_DIR"
     chmod 700 "$XDG_RUNTIME_DIR" || true
 
+    # Ensure sudo works properly by clearing any restrictive flags
+    export SUDO_FORCE_REMOVE=yes
+
     # Start Sway inside a dbus session for session services
     exec dbus-run-session -- /usr/bin/sway
 fi

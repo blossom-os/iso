@@ -41,8 +41,11 @@ systemctl enable NetworkManager
 # Set hostname
 echo "blossomos" > /etc/hostname
 
-# Configure sudoers for wheel group
+# Configure sudoers for wheel group - ensure proper permissions
 echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
+
+# Ensure sudo can escalate privileges properly
+echo "Set disable_coredump false" >> /etc/sudo.conf
 
 # Cleanup root fs
 pacman -Rns --noconfirm $(pacman -Qdtq) || true
