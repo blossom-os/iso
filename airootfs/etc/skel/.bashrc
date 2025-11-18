@@ -10,6 +10,9 @@ if [ -z "$WAYLAND_DISPLAY" ]; then
     # Ensure sudo works properly by clearing any restrictive flags
     export SUDO_FORCE_REMOVE=yes
 
+    # Fix Polkit authentication issues
+    export QT_QPA_PLATFORM=wayland
+
     # Start Sway inside a dbus session for session services
-    exec dbus-run-session -- /usr/bin/sway
+    exec dbus-run-session -- /usr/bin/sway --unsupported-gpu
 fi

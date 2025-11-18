@@ -69,7 +69,9 @@ kitty
 yad
 timeshift
 gparted
-polkit-gnome
+qt5-wayland
+qt6-wayland
+polkit-kde-agent
 
 # Themes
 breeze-gtk

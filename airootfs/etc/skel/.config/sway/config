@@ -21,8 +21,8 @@ seat * {
     xcursor_theme "Bibata-Modern-Classic" 24
 }
 
-# GNOME Polkit agent
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+# KDE Polkit agent
+exec /usr/lib/polkit-kde-authentication-agent-1 &
 
 # Wallpaper
 output * bg ~/.bg.png fill
