@@ -93,3 +93,4 @@ libappindicator-gtk3
 curl
 unzip
 git
+python
