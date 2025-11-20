@@ -16,11 +16,14 @@ mkinitcpio-archiso
 bash
 sudo
 
-# Sway desktop environment
-sway
-swaylock
-swayidle
-wl-clipboard
+# Plasma desktop environment (minimal install)
+plasma-desktop
+plasma-workspace
+plasma-wayland-session
+kde-cli-tools
+kde-gtk-config
+kwin
+sddm
 xorg-xwayland
 mesa
 vulkan-radeon
@@ -30,10 +33,6 @@ pipewire-pulse
 pipewire-alsa
 wireplumber
 brightnessctl
-grim
-slurp
-open-vm-tools
-swaybg
 
 # Text editors
 vim

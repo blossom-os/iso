@@ -24,8 +24,7 @@ cd /opt
 git clone https://github.com/blossom-os/installer.git blossomos-installer
 chown -R liveuser:liveuser /opt/blossomos-installer
 sudo -u liveuser bash -c 'cd /opt/blossomos-installer && /home/liveuser/.bun/bin/bun install'
-timeout 30s sudo -u liveuser bash -c 'cd /opt/blossomos-installer && /home/liveuser/.bun/bin/bun dev' &
-wait
+chmod +x /opt/blossomos-installer/start.sh
 
 # Install themes and icons
 wget -O /tmp/Bibata_Cursor.tar.gz https://github.com/ful1e5/Bibata_Cursor/releases/download/v2.0.7/Bibata-Modern-Classic.tar.xz
@@ -37,6 +36,7 @@ ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 
 # Enable some useful services
 systemctl enable NetworkManager
+systemctl enable sddm
 
 # Set hostname
 echo "blossomos" > /etc/hostname

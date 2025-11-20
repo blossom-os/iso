@@ -1,18 +1,29 @@
-#!/bin/bash
+#
+# ~/.bashrc
+#
 
-# Auto-start Sway on TTY1
-if [ -z "$WAYLAND_DISPLAY" ]; then
-    # Ensure a runtime dir exists for the root session
-    export XDG_RUNTIME_DIR="/run/user/$(id -u)"
-    mkdir -p "$XDG_RUNTIME_DIR"
-    chmod 700 "$XDG_RUNTIME_DIR" || true
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
 
-    # Ensure sudo works properly by clearing any restrictive flags
-    export SUDO_FORCE_REMOVE=yes
+alias ls='ls --color=auto'
+export PS1="\[\e[31m\][\[\e[m\]\[\e[33m\]\u\[\e[m\]\[\e[32m\]@\[\e[m\]\[\e[34m\]\h\[\e[m\] \[\e[35m\]\W\[\e[m\]\[\e[31m\]]\[\e[m\]\\$ "
 
-    # Fix Polkit authentication issues
-    export QT_QPA_PLATFORM=wayland
+# editor
+export EDITOR=vi
 
-    # Start Sway inside a dbus session for session services
-    exec dbus-run-session -- /usr/bin/sway --unsupported-gpu
-fi
+# aliases
+alias resource="source ~/.bashrc"
+alias cls="tput reset"
+
+# PATH
+export PATH=~/.local/bin:$PATH
+
+# ls options
+alias ls="ls --group-directories-first --color"
+
+# vi
+alias vi=vim
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

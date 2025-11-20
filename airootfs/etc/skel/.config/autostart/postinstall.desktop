@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=BlossomOS Installer
+Exec=/opt/blossomos-installer/start.sh
+Type=Application
+X-KDE-autostart-after=panel
+Hidden=false
+NoDisplay=false
