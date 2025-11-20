@@ -5,9 +5,8 @@
 echo "Setting up blossomOS..."
 
 # Set up /etc/skel with default user configuration
-chmod +x /etc/skel/.config/sway/status.sh
-chmod +x /etc/skel/.config/sway/autorun.sh
 chmod +x /etc/skel/.bashrc
+chmod +x /usr/bin/encodesn
 
 # Create Live user
 useradd liveuser

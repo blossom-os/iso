@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Get primary Mac address
+MAC="$(ip link | awk '/ether/ {print $2; exit}')"
+
+if [ -z "$MAC" ]; then
+    echo "Serial number generation failed: Unable to retrieve MAC address"
+    exit 1
+fi
+
+# Encode to serial number
+SERIAL=$(echo -n "$MAC" \
+    | openssl dgst -sha256 -binary \
+    | base32 \
+    | tr -d '=' \
+    | head -c 12)
+
+echo "$SERIAL"
