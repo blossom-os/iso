@@ -26,6 +26,8 @@ chown -R liveuser:liveuser /opt/blossomos-installer
 sudo -u liveuser bash -c 'cd /opt/blossomos-installer && /home/liveuser/.bun/bin/bun install'
 chmod +x /opt/blossomos-installer/start.sh
 python -m pip install konsave
+sudo -u liveuser bash -c 'konsave -i /usr/share/blossomos/theme.knsv'
+sudo -u liveuser bash -c 'konsave -a theme'
 
 # Install themes and icons
 wget -O /tmp/Bibata_Cursor.tar.gz https://github.com/ful1e5/Bibata_Cursor/releases/download/v2.0.7/Bibata-Modern-Classic.tar.xz
