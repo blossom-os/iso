@@ -19,7 +19,6 @@ sudo
 # Plasma desktop environment (minimal install)
 plasma-desktop
 plasma-workspace
-plasma-wayland-session
 kde-cli-tools
 kde-gtk-config
 kwin
