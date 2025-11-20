@@ -94,4 +94,5 @@ curl
 unzip
 git
 python
+python-setuptools
 python-pip

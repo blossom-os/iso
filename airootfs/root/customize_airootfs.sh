@@ -27,6 +27,8 @@ chmod +x /opt/blossomos-installer/start.sh
 python -m pip install konsave --break-system-packages # This is intentional to ensure konsave is available system-wide
 sudo -u liveuser bash -c 'konsave -i /usr/share/blossomos/theme.knsv'
 sudo -u liveuser bash -c 'konsave -a theme'
+cp -ra /home/liveuser/. /etc/skel/
+rm /etc/skel/.config/autostart/postinstall.desktop
 
 # Install themes and icons
 wget -O /tmp/Bibata_Cursor.tar.gz https://github.com/ful1e5/Bibata_Cursor/releases/download/v2.0.7/Bibata-Modern-Classic.tar.xz
