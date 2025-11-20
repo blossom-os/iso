@@ -94,3 +94,4 @@ curl
 unzip
 git
 python
+python-pip
