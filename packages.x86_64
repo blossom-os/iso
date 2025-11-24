@@ -99,4 +99,3 @@ python-pip
 
 # Preinstall drivers for compatibility
 nvidia
-sof-firmware
