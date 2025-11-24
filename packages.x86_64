@@ -50,7 +50,6 @@ base-devel
 wget
 curl
 networkmanager
-network-manager-applet
 firefox
 
 # Extra fonts
@@ -96,6 +95,3 @@ git
 python
 python-setuptools
 python-pip
-
-# Preinstall drivers for compatibility
-nvidia
