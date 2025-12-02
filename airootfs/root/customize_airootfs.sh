@@ -24,7 +24,7 @@ git clone https://github.com/blossom-os/installer.git blossomos-installer
 chown -R liveuser:liveuser /opt/blossomos-installer
 sudo -u liveuser bash -c 'cd /opt/blossomos-installer && /home/liveuser/.bun/bin/bun install'
 chmod +x /opt/blossomos-installer/start.sh
-python -m pip install konsave --break-system-packages # This is intentional to ensure konsave is available system-wide
+cd /tmp && git clone https://github.com/blossom-os/konsave-ng.git && cd konsave-ng && python -m pip install . --break-system-packages
 sudo -u liveuser bash -c 'konsave -i /usr/share/blossomos/theme.knsv'
 sudo -u liveuser bash -c 'konsave -a theme'
 cp -ra /home/liveuser/. /etc/skel/
